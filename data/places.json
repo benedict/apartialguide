@@ -6,7 +6,6 @@
 			"records": "data/records",
 			"in": ["england", "london"],
 			"waiting": {
-				"noise": "being fetched, a square at a time",
 				"epc": "not fetched for the borough yet",
 				"geograph": "not fetched for the borough yet"
 			}
