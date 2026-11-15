@@ -20,6 +20,8 @@ const DOINGS: Record<string, string> = {
 	'Department for Transport': 'those who count the traffic',
 	'Past maps': 'those who drew the map before',
 	'Ghost Signs': 'those who photograph the old painted signs',
+	'UK Health Security Agency and British Geological Survey':
+		'those who map the radon in the ground',
 	'Energy Performance of Buildings Register': 'those who rate houses for the heat they lose',
 	Geograph: 'those who photograph every square of the country',
 	'Roman Roads Research Association': 'those who trace the Roman roads',

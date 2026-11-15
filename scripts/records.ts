@@ -43,6 +43,7 @@ import { readGpkgLayer } from '../src/lib/server/gpkg';
 import { geographRecords } from '../src/lib/server/sources/geograph';
 import { trafficRecords } from '../src/lib/server/sources/traffic';
 import { ghostSignRecords } from '../src/lib/server/sources/ghostsigns';
+import { radonAreas, readDbf } from '../src/lib/server/sources/radon';
 import { lostPubs, type PastMap } from '../src/lib/server/sources/pubs';
 import { inBox, point } from '../src/lib/server/sources/box';
 import {
@@ -55,7 +56,7 @@ import {
 	zoneAreas,
 	type ZoneFeature
 } from '../src/lib/server/sources/zones';
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { createWriteStream } from 'node:fs';
 import { createInterface } from 'node:readline';
 import { Readable } from 'node:stream';
@@ -483,6 +484,38 @@ SELECT ?paon ?street ?amount ?date WHERE {
 		const records = lostPubs(pasts, snapshot.elements, bbox);
 		console.log(`pubs: ${records.length} the map has no longer`);
 		return { source: 'Past maps', prefix: 'pub', records };
+	},
+	/**
+	 * Radon potential by kilometre square, from the BGS/UKHSA Indicative Atlas of Radon (v3, OGL):
+	 * the squares of class 2 or above reaching into the box, as areas told on crossing. Read from
+	 * RADON_ZIP, the atlas downloaded by hand, or from BGS's download page, which names the file.
+	 */
+	radon: async () => {
+		let zip = process.env.RADON_ZIP;
+		if (!zip) {
+			const page = await (
+				await fetch(
+					'https://www.bgs.ac.uk/download/radon-potential-indicative-atlas-data-for-great-britain/',
+					{ headers }
+				)
+			).text();
+			const url = /data-downloadurl="([^"]+)"/.exec(page)?.[1]?.replace(/&amp;/g, '&');
+			if (!url) throw new Error('the radon atlas page names no file');
+			const res = await fetch(url, { headers });
+			if (!res.ok || !res.body) throw new Error(`the radon atlas answered ${res.status}`);
+			zip = '/tmp/radon.zip';
+			await pipeline(Readable.fromWeb(res.body as WebStream), createWriteStream(zip));
+		}
+		const dbf = execFileSync('unzip', ['-p', zip, '*.dbf'], { maxBuffer: 64 * 1024 * 1024 });
+		const areas = radonAreas(readDbf(new Uint8Array(dbf)), bbox);
+		console.log(`radon: ${areas.length} squares of class 2 or above in the box`);
+		return {
+			source: 'UK Health Security Agency and British Geological Survey',
+			prefix: 'radon',
+			records: [],
+			overlay: true,
+			areas
+		};
 	},
 	/**
 	 * London's ghost signs, from the map that goes with Sam Roberts' Ghost Signs: A London Story,

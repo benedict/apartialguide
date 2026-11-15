@@ -171,3 +171,15 @@ describe('heritage zones', () => {
 		).toEqual(['You come into “Inventon Road Conservation Area”.']);
 	});
 });
+
+describe('radon', () => {
+	it('tells coming onto and off ground of a radon band, as the atlas estimates it', () => {
+		const band: Zone = { name: '3 to 5%', kind: 'radon', claims: { class: '3' } };
+		expect(zoneLines([band], [])).toEqual([
+			'You come onto ground where, in places, 3 to 5% of homes are estimated to have radon at or above the action level.'
+		]);
+		expect(zoneLines([], [band])).toEqual([
+			'You come off ground where, in places, 3 to 5% of homes are estimated to have radon at or above the action level.'
+		]);
+	});
+});
