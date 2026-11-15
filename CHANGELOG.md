@@ -8,10 +8,12 @@ Add to it with each change worth telling: a line for walkers where a walker woul
 
 ### For walkers
 
+- Radon: the walk says when you come onto ground where, in places, more than 1% of homes are estimated to have radon at or above the action level, and when you come off it, by kilometre square. It is an estimate for the square, not a measure of any house.
 - London's ghost signs: old painted adverts on walls now turn up where they are, by their words, such as “Courage & Barclay's” or “Browns The Bakers”, and the walk says when one has since gone. With thanks to Sam Roberts, who mapped them for his book Ghost Signs: A London Story.
 
 ### Under the hood
 
+- `SOURCES=radon npm run records`: the BGS/UKHSA Indicative Atlas of Radon (v3, OGL), downloaded from BGS's page or read from `RADON_ZIP`, its DBF read directly (`server/sources/radon.ts`: `readDbf`, `gridSquare` for the Ordnance Survey kilometre squares, `radonAreas`). Squares of class 2 or above are overlay areas told on coming onto and off them, each class read as its band from the user guide's table; class 1 (below 1%) is left out. Croydon's box has 131, Kenilworth's 32.
 - `SOURCES=ghostsigns npm run records`: the ghost signs on Sam Roberts' map, read from Google's My Maps as KML (`server/sources/ghostsigns.ts`, `GHOSTSIGNS_MAP`): each sign's words, place and whether it has gone, never its photograph or the book's number. Croydon's box has 26. A sign is always noticed, as a plaque is, and kept out of prose. What is kept out of prose now costs a stop no attention (`slippage.ts`), so the prompt is as it was: stored prose found for Croydon is 2,554, which also brings back the one piece the lost pubs had pushed out.
 
 ## 2026-11-14

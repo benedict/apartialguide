@@ -147,6 +147,12 @@ export const SOURCES: Source[] = [
 			'Mapped by Sam Roberts (ghostsigns.co.uk) for Ghost Signs: A London Story. Only each sign’s words and place are used, with thanks; his photographs are not.'
 	},
 	{
+		name: 'Indicative Atlas of Radon Potential, BGS and UKHSA',
+		href: 'https://www.bgs.ac.uk/datasets/radon-data-indicative-atlas-of-radon/',
+		gives: 'radon potential by kilometre square',
+		terms: `Radon Potential classification © UK Health Security Agency © Crown copyright 2022. Contains British Geological Survey materials © UKRI 2022. ${OGL}`
+	},
+	{
 		name: 'London Planning Datahub',
 		href: 'https://planningdata.london.gov.uk/',
 		gives: 'planning applications',
