@@ -36,3 +36,50 @@ describe('airNow', () => {
 		expect(airNow([])).toBeUndefined();
 	});
 });
+
+describe('the air in more detail: what makes it, and pollen', () => {
+	const answer = {
+		current: {
+			time: '2026-05-10T09:00',
+			european_aqi: 45,
+			european_aqi_pm2_5: 20,
+			european_aqi_pm10: 12,
+			european_aqi_nitrogen_dioxide: 45,
+			european_aqi_ozone: 30,
+			european_aqi_sulphur_dioxide: 2,
+			grass_pollen: 34.4,
+			birch_pollen: 0.4,
+			alder_pollen: 0,
+			mugwort_pollen: null,
+			olive_pollen: 0,
+			ragweed_pollen: 0
+		}
+	};
+
+	it('reads each pollutant’s part of the index and each pollen, as given', () => {
+		const keys = currentAirFacts(answer).map((f) => `${f.claim.key}=${f.claim.value}`);
+		expect(keys).toEqual(
+			expect.arrayContaining([
+				'air:index=45',
+				'air:nitrogen_dioxide=45',
+				'air:pm2_5=20',
+				'pollen:grass=34.4',
+				'pollen:birch=0.4'
+			])
+		);
+		expect(keys.join(' ')).not.toContain('mugwort');
+	});
+
+	it('names what makes the index, beyond good, and the pollen of a grain or more, by the forecast', () => {
+		expect(airNow(currentAirFacts(answer))).toBe(
+			'The air: moderate, 45 on the European index, the most of it nitrogen dioxide. Pollen in the air, by the forecast: grass, 34 grains a cubic metre.'
+		);
+	});
+
+	it('says no more than the index when the air is good and there is no pollen', () => {
+		const good = {
+			current: { ...answer.current, european_aqi: 12, grass_pollen: 0, birch_pollen: 0 }
+		};
+		expect(airNow(currentAirFacts(good))).toBe('The air: good, 12 on the European index.');
+	});
+});
