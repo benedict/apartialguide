@@ -183,3 +183,19 @@ describe('radon', () => {
 		]);
 	});
 });
+
+describe('road noise', () => {
+	it('tells coming onto loud ground with its band where you stand, and coming off it', () => {
+		const loud: Zone = {
+			name: 'road noise',
+			kind: 'road noise',
+			claims: { band: '70 to 75 decibels' }
+		};
+		expect(zoneLines([loud], [])).toEqual([
+			'You come onto ground where road noise averages 70 to 75 decibels, over a day and a night.'
+		]);
+		expect(zoneLines([], [loud])).toEqual([
+			'You come off ground where road noise averages 65 decibels or more.'
+		]);
+	});
+});

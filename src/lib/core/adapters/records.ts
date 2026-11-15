@@ -1,5 +1,6 @@
 import type { Fact, SourceAdapter } from '../facts';
 import type { AreaRecord } from '../areas';
+import type { ValueGrid } from '../valuegrid';
 import { distance, nearestOnPolyline, type LatLon } from '../geo';
 import { elementRef, type OsmElement, type OsmIndex } from '../osm';
 import { allowedClaims, concernsAPerson } from './personal';
@@ -46,6 +47,8 @@ export interface RecordStore {
 	areas?: AreaRecord[];
 	/** Whether its areas lie over the map as zones (flood zones), rather than dividing it (wards). */
 	overlay?: boolean;
+	/** Values it keeps on a grid over the map, such as road noise: told as zones, by their band. */
+	grids?: ValueGrid[];
 	/** What it keeps beyond the map's edge, told only when the reader looks beyond. */
 	beyond?: { name?: string; kind: string; points: LatLon[] }[];
 }
