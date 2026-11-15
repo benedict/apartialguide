@@ -515,16 +515,22 @@ SELECT ?paon ?street ?amount ?date WHERE {
 			for (let y = n0; y <= n1; y++) {
 				const url = `${service}?service=WCS&version=2.0.1&request=GetCoverage&coverageId=${coverage}&subset=E(${x * 1000},${x * 1000 + 1000})&subset=N(${y * 1000},${y * 1000 + 1000})&format=image/tiff`;
 				let piece: Raster | null = null;
-				for (const wait of [0, 10, 30]) {
-					if (wait) await new Promise((r) => setTimeout(r, wait * 1000));
+				// One square at a time, with a pause between: the service turns away a quicker pace (429),
+				// and is waited for as long as it asks, or a minute.
+				let wait = 2;
+				for (let tries = 0; tries < 6 && !piece; tries++) {
+					await new Promise((r) => setTimeout(r, wait * 1000));
 					try {
-						const res = await fetch(url, { headers, signal: AbortSignal.timeout(90_000) });
+						const res = await fetch(url, { headers, signal: AbortSignal.timeout(60_000) });
 						if (res.ok && (res.headers.get('content-type') ?? '').includes('tiff')) {
 							piece = readTiff(new Uint8Array(await res.arrayBuffer()));
 							break;
 						}
-						console.log(`noise: ${x},${y} answered ${res.status}`);
+						const asked = Number(res.headers.get('retry-after'));
+						wait = res.status === 429 ? (asked > 0 ? asked : 60) : 15;
+						console.log(`noise: ${x},${y} answered ${res.status}; asking again in ${wait} s`);
 					} catch (err) {
+						wait = 15;
 						console.log(`noise: ${x},${y} gave no answer (${(err as Error).message})`);
 					}
 				}
