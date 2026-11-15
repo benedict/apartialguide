@@ -43,6 +43,7 @@ describe('the register of sources', () => {
 		const london: Place = { ...inventa, in: ['england', 'london'], waiting: {} };
 		expect(checkPlace(london, everyEnglishFile).missing).toEqual([
 			'planning',
+			'air',
 			'ghostsigns',
 			'trees'
 		]);

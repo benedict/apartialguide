@@ -108,7 +108,7 @@ describe('levels from a grid', () => {
 			{ kind: 'fine particles', year: '2022', scale: 10, value: 8.4 }
 		]);
 		expect(n.levelsAt([lat + 1, lon])).toEqual([]);
-		const stops = Object.values(compileWorld(n).stops);
+		const stops = Object.values(compileWorld(n, n.graph.all()[0].id).stops);
 		expect(stops.every((s) => s.levels?.length === 2)).toBe(true);
 	});
 });
