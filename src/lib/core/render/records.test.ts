@@ -229,3 +229,12 @@ describe('recordSentences, a pub the map no longer has', () => {
 		).toEqual(['The map had a pub here in 2019.']);
 	});
 });
+
+describe('recordSentences, a ghost sign', () => {
+	it('says in a room that a sign has gone since it was recorded, and nothing of one still there', () => {
+		expect(
+			recordSentences({ 'ghostsign:kind': 'ghost sign', 'ghostsign:gone': 'yes' }, 'room')
+		).toEqual(['It has gone since it was recorded.']);
+		expect(recordSentences({ 'ghostsign:kind': 'ghost sign' }, 'room')).toEqual([]);
+	});
+});

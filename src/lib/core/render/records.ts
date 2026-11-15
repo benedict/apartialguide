@@ -102,6 +102,7 @@ const SAYINGS: [boolean, (t: Tags, plain: boolean) => string | undefined][] = [
 			return `${depth} metres deep${year}.`;
 		}
 	],
+	[true, (t) => (t['ghostsign:gone'] === 'yes' ? 'It has gone since it was recorded.' : undefined)],
 	[
 		true,
 		(t) => {

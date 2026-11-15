@@ -124,6 +124,39 @@ describe('chooseSlippage', () => {
 		expect(plan.beats.map((b) => b.subject)).toEqual(['node/0', 'node/1', 'plaque/1', 'node/20']);
 	});
 
+	it('always notices a ghost sign, words on a wall to be read, however crowded the view', () => {
+		const many = Array.from({ length: 9 }, (_, i) =>
+			facts(`node/${i}`, { amenity: 'bench' })
+		).flat();
+		const sign = facts('ghostsign/1', {
+			'ghostsign:name': 'Invented Teas',
+			'ghostsign:kind': 'ghost sign'
+		});
+		const plan = chooseSlippage('s1', [...street, ...many, ...sign], [{ kind: 'dense' }]);
+		expect(plan.beats.map((b) => b.subject)).toContain('ghostsign/1');
+	});
+
+	it('lets what is kept out of prose cost no attention, so the rest are noticed as before', () => {
+		const some = Array.from({ length: 4 }, (_, i) =>
+			facts(`node/${i}`, { amenity: 'bench' })
+		).flat();
+		const kept = facts(
+			'ghostsign/1',
+			{ 'ghostsign:name': 'Invented Teas', 'ghostsign:kind': 'ghost sign' },
+			{ source: 'Ghost Signs' }
+		);
+		const pub = facts(
+			'pub/1',
+			{ 'pub:name': 'The Invented Arms', 'pub:kind': 'pub' },
+			{ source: 'Past maps' }
+		);
+		const plan = chooseSlippage('s1', [...street, ...kept, ...pub, ...some], []);
+		expect(plan.beats.map((b) => b.subject)).toEqual(
+			expect.arrayContaining(['node/0', 'node/1', 'node/2', 'node/3'])
+		);
+		expect(plan.hidden.map((b) => b.subject)).not.toContain('node/3');
+	});
+
 	it('leaves an old survey hidden when it is beyond attention', () => {
 		const some = Array.from({ length: 6 }, (_, i) =>
 			facts(`node/${i}`, { amenity: 'bench' })

@@ -140,6 +140,13 @@ export const SOURCES: Source[] = [
 		terms: OGL
 	},
 	{
+		name: 'Ghost Signs: A London Story',
+		href: 'https://ghostsigns.co.uk/book',
+		gives: 'London’s ghost signs, where they are and which have gone',
+		terms:
+			'Mapped by Sam Roberts (ghostsigns.co.uk) for Ghost Signs: A London Story. Only each sign’s words and place are used, with thanks; his photographs are not.'
+	},
+	{
 		name: 'London Planning Datahub',
 		href: 'https://planningdata.london.gov.uk/',
 		gives: 'planning applications',

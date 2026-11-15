@@ -19,6 +19,7 @@ const DOINGS: Record<string, string> = {
 	'Environment Agency': 'those who map where the water goes',
 	'Department for Transport': 'those who count the traffic',
 	'Past maps': 'those who drew the map before',
+	'Ghost Signs': 'those who photograph the old painted signs',
 	'Energy Performance of Buildings Register': 'those who rate houses for the heat they lose',
 	Geograph: 'those who photograph every square of the country',
 	'Roman Roads Research Association': 'those who trace the Roman roads',
@@ -47,6 +48,7 @@ const OUT_OF_PROSE = new Set([
 	'Energy Performance of Buildings Register',
 	'Geograph',
 	'Department for Transport',
-	'Past maps'
+	'Past maps',
+	'Ghost Signs'
 ]);
 export const keptOutOfProse = (source: string): boolean => OUT_OF_PROSE.has(keeper(source));

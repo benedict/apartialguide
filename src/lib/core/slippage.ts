@@ -1,5 +1,6 @@
 import { groupBySubject, type Fact } from './facts';
 import { isStreet, type Tension } from './tensions';
+import { keptOutOfProse } from './keepers';
 
 export type Effect =
 	| 'spoken-as-found'
@@ -40,11 +41,12 @@ const ALWAYS_NOTICED = new Set<Effect>([
 	'was-here'
 ]);
 
-/** A plaque is put up to be read: one on the map, or one another account records. */
+/** A plaque is put up to be read: one on the map, or one another account records; so is a ghost sign. */
 const isPlaque = (beat: Beat) =>
 	beat.facts.some(
 		(f) =>
 			f.claim.key === 'plaque:inscription' ||
+			f.claim.key === 'ghostsign:kind' ||
 			(f.claim.key === 'memorial' && /^(blue_)?plaque$/.test(f.claim.value))
 	);
 
@@ -88,6 +90,9 @@ export function chooseSlippage(
 	let attention = ATTENTION[mood];
 	const noticed = beats.filter((b) => {
 		if (isBackground(b)) return true;
+		// What the prompt never sees (a ghost sign, a lost pub) is told by the template alone, and
+		// costs the rest no attention, so the prompt, and the prose kept for it, is as it was.
+		if (b.facts.every((f) => keptOutOfProse(f.source))) return true;
 		const seen = attention > 0 || b.effects.some((e) => ALWAYS_NOTICED.has(e)) || isPlaque(b);
 		attention--;
 		return seen;

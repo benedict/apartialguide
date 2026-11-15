@@ -4,6 +4,16 @@ What has changed in A Partial Guide, newest first. Each day has lines **for walk
 
 Add to it with each change worth telling: a line for walkers where a walker would notice, a line under the hood where only the code changed. The front page shows the latest three days that have lines for walkers.
 
+## 2026-11-15
+
+### For walkers
+
+- London's ghost signs: old painted adverts on walls now turn up where they are, by their words, such as “Courage & Barclay's” or “Browns The Bakers”, and the walk says when one has since gone. With thanks to Sam Roberts, who mapped them for his book Ghost Signs: A London Story.
+
+### Under the hood
+
+- `SOURCES=ghostsigns npm run records`: the ghost signs on Sam Roberts' map, read from Google's My Maps as KML (`server/sources/ghostsigns.ts`, `GHOSTSIGNS_MAP`): each sign's words, place and whether it has gone, never its photograph or the book's number. Croydon's box has 26. A sign is always noticed, as a plaque is, and kept out of prose. What is kept out of prose now costs a stop no attention (`slippage.ts`), so the prompt is as it was: stored prose found for Croydon is 2,554, which also brings back the one piece the lost pubs had pushed out.
+
 ## 2026-11-14
 
 ### For walkers
