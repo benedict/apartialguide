@@ -39,11 +39,12 @@ import { postcodeRecords } from '../src/lib/server/sources/postcodes';
 import { companyRecords } from '../src/lib/server/sources/companies';
 import { epcFromSearch, epcRecords } from '../src/lib/server/sources/epc';
 import { britanniaBeyond, BRITANNIA_TABLES } from '../src/lib/server/sources/britannia';
-import { readGpkgLayer } from '../src/lib/server/gpkg';
+import { readGpkgLayer, toNationalGrid } from '../src/lib/server/gpkg';
 import { geographRecords } from '../src/lib/server/sources/geograph';
 import { trafficRecords } from '../src/lib/server/sources/traffic';
 import { ghostSignRecords } from '../src/lib/server/sources/ghostsigns';
 import { radonAreas, readDbf } from '../src/lib/server/sources/radon';
+import { noiseGrid, readTiff, type Raster } from '../src/lib/server/sources/noise';
 import { lostPubs, type PastMap } from '../src/lib/server/sources/pubs';
 import { inBox, point } from '../src/lib/server/sources/box';
 import {
@@ -484,6 +485,58 @@ SELECT ?paon ?street ?amount ?date WHERE {
 		const records = lostPubs(pasts, snapshot.elements, bbox);
 		console.log(`pubs: ${records.length} the map has no longer`);
 		return { source: 'Past maps', prefix: 'pub', records };
+	},
+	/**
+	 * Road noise, Defra's strategic noise maps of round 4 (2022, OGL), the day-evening-night average
+	 * of all roads, from the Environment Agency's coverage service a kilometre square at a time (a
+	 * larger piece times out), banded where it is 65 decibels or more, on a grid of about ten metres.
+	 */
+	noise: async () => {
+		const service =
+			'https://environment.data.gov.uk/spatialdata/road-noise-all-metrics-england-round-4/wcs';
+		const coverage = '562c9d56-7c2d-4d42-83bb-578d6e97a517__Road_Noise_Lden_England_Round_4_All';
+		const corners = [
+			[w, s],
+			[e, s],
+			[e, n],
+			[w, n]
+		].map(toNationalGrid);
+		const km = (x: number) => Math.floor(x / 1000);
+		const [e0, e1] = [
+			km(Math.min(...corners.map((c) => c[0]))),
+			km(Math.max(...corners.map((c) => c[0])))
+		];
+		const [n0, n1] = [
+			km(Math.min(...corners.map((c) => c[1]))),
+			km(Math.max(...corners.map((c) => c[1])))
+		];
+		const pieces = new Map<string, Raster | null>();
+		for (let x = e0; x <= e1; x++)
+			for (let y = n0; y <= n1; y++) {
+				const url = `${service}?service=WCS&version=2.0.1&request=GetCoverage&coverageId=${coverage}&subset=E(${x * 1000},${x * 1000 + 1000})&subset=N(${y * 1000},${y * 1000 + 1000})&format=image/tiff`;
+				let piece: Raster | null = null;
+				for (const wait of [0, 10, 30]) {
+					if (wait) await new Promise((r) => setTimeout(r, wait * 1000));
+					try {
+						const res = await fetch(url, { headers, signal: AbortSignal.timeout(90_000) });
+						if (res.ok && (res.headers.get('content-type') ?? '').includes('tiff')) {
+							piece = readTiff(new Uint8Array(await res.arrayBuffer()));
+							break;
+						}
+						console.log(`noise: ${x},${y} answered ${res.status}`);
+					} catch (err) {
+						console.log(`noise: ${x},${y} gave no answer (${(err as Error).message})`);
+					}
+				}
+				pieces.set(`${x},${y}`, piece);
+			}
+		const missing = [...pieces.values()].filter((p) => !p).length;
+		console.log(`noise: ${pieces.size} squares asked, ${missing} without an answer`);
+		const grid = noiseGrid((lat, lon) => {
+			const [x, y] = toNationalGrid([lon, lat]);
+			return pieces.get(`${km(x)},${km(y)}`)?.at(x, y);
+		}, bbox);
+		return { source: 'Defra', prefix: 'noise', records: [], grids: [grid] };
 	},
 	/**
 	 * Radon potential by kilometre square, from the BGS/UKHSA Indicative Atlas of Radon (v3, OGL):

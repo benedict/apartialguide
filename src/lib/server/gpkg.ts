@@ -18,6 +18,10 @@ const BNG =
 	'+towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs';
 const toWgs84 = proj4(BNG, 'WGS84');
 
+/** A longitude and latitude as an easting and northing. */
+export const toNationalGrid = ([lon, lat]: number[]): [number, number] =>
+	toWgs84.inverse([lon, lat]) as [number, number];
+
 /** An easting and northing as longitude and latitude. */
 export const fromNationalGrid = ([e, n]: number[]): [number, number] =>
 	toWgs84.forward([e, n]) as [number, number];

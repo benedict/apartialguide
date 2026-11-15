@@ -45,3 +45,38 @@ describe('zones with holes', () => {
 		expect(n.zonesAt(destination(O, 0, 200)).map((z) => z.name)).toEqual(['INVENTED GROUP']);
 	});
 });
+
+describe('zones from a grid of values', () => {
+	it('puts a point in a grid’s zone, its band as the claim, and none where the grid gives no band', () => {
+		const map = new SyntheticMap();
+		map.way([map.node(O), map.nodeFrom(O, 90, 40)]);
+		const [lat, lon] = O;
+		const n = Narrator.fromOsm(map.toData(), {
+			clock: fixedClock('2026-11-15'),
+			records: [
+				{
+					source: 'Invented noise',
+					prefix: 'noise',
+					retrieved: '2026-11-15',
+					records: [],
+					grids: [
+						{
+							name: 'road noise',
+							kind: 'road noise',
+							south: lat - 0.0005,
+							west: lon - 0.0005,
+							dLat: 0.001,
+							dLon: 0.001,
+							rows: ['2,0'],
+							bands: ['', '65 to 70 decibels', '70 to 75 decibels']
+						}
+					]
+				}
+			]
+		});
+		expect(n.zonesAt(O).map((z) => [z.name, z.kind, z.claims])).toEqual([
+			['road noise', 'road noise', { band: '70 to 75 decibels' }]
+		]);
+		expect(n.zonesAt([lat, lon + 0.001])).toEqual([]);
+	});
+});

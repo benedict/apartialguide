@@ -1,3 +1,4 @@
+import { valueAt, type ValueGrid } from './valuegrid';
 import { isMineEntry } from './entries';
 import { HistoryAdapter } from './adapters/history';
 import { OsmAdapter } from './adapters/osm';
@@ -189,6 +190,7 @@ export class Narrator {
 	/** What others keep beyond the map's edge, by whom. */
 	readonly beyond: Beyond[];
 	private readonly zones: AreaRecord[];
+	private readonly grids: ValueGrid[];
 	/** The named things, filed by where they lie, so the nearest is sought only among those near. */
 	private readonly namedGrid = new Grid<number>(NEAREST_NAME_REACH);
 
@@ -208,6 +210,7 @@ export class Narrator {
 		const stores = options.records ?? [];
 		this.areas = stores.filter((s) => !s.overlay).flatMap((store) => store.areas ?? []);
 		this.zones = stores.filter((s) => s.overlay).flatMap((store) => store.areas ?? []);
+		this.grids = stores.flatMap((store) => store.grids ?? []);
 		this.beyond = stores.flatMap((store) =>
 			(store.beyond ?? []).map((b) => ({ ...b, source: store.source }))
 		);
@@ -327,11 +330,17 @@ export class Narrator {
 
 	/** Every zone another account draws over a point, such as flood zones. */
 	zonesAt(p: LatLon): AreaRecord[] {
-		return this.zones.filter(
+		const drawn = this.zones.filter(
 			(z) =>
 				z.rings.some((ring) => insideRing(p, ring)) &&
 				!(z.holes ?? []).some((hole) => insideRing(p, hole))
 		);
+		// A grid's zone is one, whatever its band here: the band is what it says of this place.
+		const gridded = this.grids.flatMap((g): AreaRecord[] => {
+			const band = valueAt(g, p);
+			return band ? [{ id: g.kind, name: g.name, kind: g.kind, rings: [], claims: { band } }] : [];
+		});
+		return [...drawn, ...gridded];
 	}
 
 	/** The area another account puts a point in, such as a ward, if any. */
