@@ -1,0 +1,297 @@
+{
+	"source": "Ghost Signs",
+	"prefix": "ghostsign",
+	"records": [
+		{
+			"id": "fb795ba4714e",
+			"at": [
+				51.3858714,
+				-0.114233
+			],
+			"claims": {
+				"name": "Hovis/T.H. Sadler | Daren/H.S. Tong",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "fb18eef00550",
+			"at": [
+				51.3676461,
+				-0.102726
+			],
+			"claims": {
+				"name": "E. Reeve",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "65c38f23cd9a",
+			"at": [
+				51.4122681,
+				-0.0670364
+			],
+			"claims": {
+				"name": "A. Spicknell/T.W. Beach & Sons | S.C. Dunk | Walford & Wilshin",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "51e1900b1752",
+			"at": [
+				51.4198659,
+				-0.1064475
+			],
+			"claims": {
+				"name": "Thompson's",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "e78c28bfdad4",
+			"at": [
+				51.4042806,
+				-0.068221
+			],
+			"claims": {
+				"name": "The Victoria Wine Co.",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "d339a50f263f",
+			"at": [
+				51.4137362,
+				-0.0521481
+			],
+			"claims": {
+				"name": "Wool & Woollies",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "16e060442608",
+			"at": [
+				51.4123726,
+				-0.0671786
+			],
+			"claims": {
+				"name": "Boot & Shoe Specialist",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "f59fba6861fe",
+			"at": [
+				51.3987005,
+				-0.0755999
+			],
+			"claims": {
+				"name": "Boots (Belgrave Road)",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "eb3608e38f61",
+			"at": [
+				51.3859445,
+				-0.0983533
+			],
+			"claims": {
+				"name": "Browns The Bakers",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "6faa31446040",
+			"at": [
+				51.3387544,
+				-0.1163958
+			],
+			"claims": {
+				"name": "Bunce",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "9e369e7fa82d",
+			"at": [
+				51.3878824,
+				-0.1112123
+			],
+			"claims": {
+				"name": "Coughlans Patisserie",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "79c102096520",
+			"at": [
+				51.3254722,
+				-0.0997364
+			],
+			"claims": {
+				"name": "Courage & Barclay's",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "c9070df72f65",
+			"at": [
+				51.3876971,
+				-0.111043
+			],
+			"claims": {
+				"name": "Double Diamond",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "621e736661cb",
+			"at": [
+				51.3795497,
+				-0.0747773
+			],
+			"claims": {
+				"name": "The Exchange",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "3ab6adfaf36a",
+			"at": [
+				51.3981977,
+				-0.0465186
+			],
+			"claims": {
+				"name": "Greenwoods Corner",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "ed338bab2d5d",
+			"at": [
+				51.4079964,
+				-0.045612
+			],
+			"claims": {
+				"name": "Houses to be Sold or Let",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "93a0bc6ee3e8",
+			"at": [
+				51.4189777,
+				-0.0825289
+			],
+			"claims": {
+				"name": "James Jackson & Son",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "3e462e9c6727",
+			"at": [
+				51.371988,
+				-0.1005989
+			],
+			"claims": {
+				"name": "Millet's",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "e66bd049f01f",
+			"at": [
+				51.4074732,
+				-0.0263593
+			],
+			"claims": {
+				"name": "Reserved for the Greyhound",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "7d4d066ac65f",
+			"at": [
+				51.3955286,
+				-0.0750137
+			],
+			"claims": {
+				"name": "Rickards Signwriter",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "25e817c7b55d",
+			"at": [
+				51.4000527,
+				-0.0736931
+			],
+			"claims": {
+				"name": "Smith Builders Ltd",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "a8bd647c8230",
+			"at": [
+				51.3596612,
+				-0.0951325
+			],
+			"claims": {
+				"name": "J H Taylor",
+				"kind": "ghost sign"
+			}
+		},
+		{
+			"id": "33272c648d3f",
+			"at": [
+				51.4121015,
+				-0.1238744
+			],
+			"claims": {
+				"name": "B A Elliston & Co Ltd",
+				"kind": "ghost sign",
+				"gone": "yes"
+			}
+		},
+		{
+			"id": "49b7628643ee",
+			"at": [
+				51.4192049,
+				-0.0826954
+			],
+			"claims": {
+				"name": "J Garnham & Sons",
+				"kind": "ghost sign",
+				"gone": "yes"
+			}
+		},
+		{
+			"id": "19946c4b916e",
+			"at": [
+				51.4220429,
+				-0.1293552
+			],
+			"claims": {
+				"name": "Howard for Houses",
+				"kind": "ghost sign",
+				"gone": "yes"
+			}
+		},
+		{
+			"id": "13ca6253b3a9",
+			"at": [
+				51.3985764,
+				-0.0944808
+			],
+			"claims": {
+				"name": "Removals to all Parts",
+				"kind": "ghost sign",
+				"gone": "yes"
+			}
+		}
+	],
+	"retrieved": "2026-11-15"
+}

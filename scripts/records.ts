@@ -42,6 +42,7 @@ import { britanniaBeyond, BRITANNIA_TABLES } from '../src/lib/server/sources/bri
 import { readGpkgLayer } from '../src/lib/server/gpkg';
 import { geographRecords } from '../src/lib/server/sources/geograph';
 import { trafficRecords } from '../src/lib/server/sources/traffic';
+import { ghostSignRecords } from '../src/lib/server/sources/ghostsigns';
 import { lostPubs, type PastMap } from '../src/lib/server/sources/pubs';
 import { inBox, point } from '../src/lib/server/sources/box';
 import {
@@ -482,6 +483,18 @@ SELECT ?paon ?street ?amount ?date WHERE {
 		const records = lostPubs(pasts, snapshot.elements, bbox);
 		console.log(`pubs: ${records.length} the map has no longer`);
 		return { source: 'Past maps', prefix: 'pub', records };
+	},
+	/**
+	 * London's ghost signs, from the map that goes with Sam Roberts' Ghost Signs: A London Story,
+	 * downloaded as KML from Google's My Maps (`GHOSTSIGNS_MAP`, the map's id): each sign's words
+	 * and place, and whether it has gone. Its photographs are never fetched.
+	 */
+	ghostsigns: async () => {
+		const map = process.env.GHOSTSIGNS_MAP ?? '1KjHS8uGZeV08xYooNSgUUVZuiTSvXIRq';
+		const res = await fetch(`https://www.google.com/maps/d/kml?mid=${map}&forcekml=1`, { headers });
+		if (!res.ok) throw new Error(`the ghost signs map answered ${res.status}`);
+		const records = ghostSignRecords(await res.text(), bbox);
+		return { source: 'Ghost Signs', prefix: 'ghostsign', records };
 	},
 	/**
 	 * The Department for Transport's counts of traffic on the roads in the box: each count point's
