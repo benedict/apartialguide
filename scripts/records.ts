@@ -44,6 +44,7 @@ import { geographRecords } from '../src/lib/server/sources/geograph';
 import { trafficRecords } from '../src/lib/server/sources/traffic';
 import { ghostSignRecords } from '../src/lib/server/sources/ghostsigns';
 import { radonAreas, readDbf } from '../src/lib/server/sources/radon';
+import { levelGrid, readAsc } from '../src/lib/server/sources/laei';
 import type { SourceKey } from '../src/lib/server/register';
 import { noiseGrid, readTiff, type Raster } from '../src/lib/server/sources/noise';
 import { lostPubs, type PastMap } from '../src/lib/server/sources/pubs';
@@ -559,6 +560,53 @@ SELECT ?paon ?street ?amount ?date WHERE {
 			return piece === null ? null : piece?.at(x, y);
 		}, bbox);
 		return { source: 'Defra', prefix: 'noise', records: [], grids: [grid] };
+	},
+	/**
+	 * The air as modelled for 2022 by the London Atmospheric Emissions Inventory (OGL): the annual
+	 * mean of nitrogen dioxide and of fine particles (PM2.5), by 20 metre square, kept on a grid of the
+	 * box and told on looking. Read from LAEI_ZIP, the concentrations downloaded by hand, or from the
+	 * London Datastore. Beyond London the inventory has nothing, and nothing is kept.
+	 */
+	air: async () => {
+		let zip = process.env.LAEI_ZIP;
+		if (!zip) {
+			const res = await fetch(
+				'https://data.london.gov.uk/download/2lg5g/d44/LAEI2022-Concentrations-Data-ASCII.zip',
+				{ headers }
+			);
+			if (!res.ok || !res.body) throw new Error(`the London inventory answered ${res.status}`);
+			zip = '/tmp/laei.zip';
+			await pipeline(Readable.fromWeb(res.body as WebStream), createWriteStream(zip));
+		}
+		const read = (file: string) =>
+			readAsc(
+				execFileSync('unzip', ['-p', zip, `ASCII/${file}`], {
+					maxBuffer: 256 * 1024 * 1024
+				}).toString()
+			);
+		const levels = (
+			[
+				['LAEI2022_V1_NO2.asc', 'nitrogen dioxide', 1],
+				['LAEI2022_V1_PM25.asc', 'fine particles', 10]
+			] as const
+		)
+			.map(([file, kind, scale]) => {
+				const raster = read(file);
+				return levelGrid((lat, lon) => raster.at(...toNationalGrid([lon, lat])), bbox, {
+					kind,
+					year: '2022',
+					scale,
+					cellM: 20
+				});
+			})
+			.filter((grid) => grid.rows.some((row) => !/^0(x\d+)?$/.test(row)));
+		console.log(`air: ${levels.length} of the inventory's levels reach the box`);
+		return {
+			source: 'London Atmospheric Emissions Inventory',
+			prefix: 'air',
+			records: [],
+			levels
+		};
 	},
 	/**
 	 * Radon potential by kilometre square, from the BGS/UKHSA Indicative Atlas of Radon (v3, OGL):

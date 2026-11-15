@@ -159,6 +159,13 @@ export const SOURCES: Source[] = [
 		terms: OGL
 	},
 	{
+		name: 'London Atmospheric Emissions Inventory 2022',
+		href: 'https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g',
+		gives:
+			'nitrogen dioxide and fine particles in the air, as modelled for 2022, by 20 metre square',
+		terms: `Greater London Authority. ${OGL}`
+	},
+	{
 		name: 'London Planning Datahub',
 		href: 'https://planningdata.london.gov.uk/',
 		gives: 'planning applications',

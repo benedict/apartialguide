@@ -655,6 +655,30 @@ describe('Not repeating itself', () => {
 	});
 });
 
+describe('The air as modelled here', () => {
+	const line =
+		'As modelled for 2022, the air here held on average 23 micrograms of nitrogen dioxide in each cubic metre.';
+	const aired: AdventureWorld = {
+		start: 'a',
+		stops: {
+			a: {
+				...room('Mill Parade', [{ label: 'east', to: 'b', street: 'Mill Parade' }]),
+				levels: [{ kind: 'nitrogen dioxide', year: '2022', scale: 1, value: 23 }]
+			},
+			b: room('Mill Parade east', [{ label: 'west', to: 'a', street: 'Mill Parade' }])
+		}
+	};
+
+	it('is told on looking, after the place, and not on arriving', () => {
+		const game = new Adventure(aired);
+		game.begin();
+		expect(game.respond('take the tour').lines).not.toContain(line);
+		expect(game.respond('look').lines.at(-1)).toBe(line);
+		game.respond('east');
+		expect(game.respond('look').lines).not.toContain(line);
+	});
+});
+
 describe('Examining what is here', () => {
 	const pub = {
 		id: 'node/1',

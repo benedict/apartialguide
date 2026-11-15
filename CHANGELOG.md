@@ -8,6 +8,7 @@ Add to it with each change worth telling: a line for walkers where a walker woul
 
 ### For walkers
 
+- The air as modelled: in London, `look` now ends with what the air held on average in 2022, as London's inventory of emissions models it, square by square: “As modelled for 2022, the air here held on average 32 micrograms of nitrogen dioxide in each cubic metre, and 11.3 of fine particles.” It is told only when you look, never on arriving, with no limit or guideline set against it.
 - Road noise: the walk says when you come onto ground where the noise of the roads averages 65 decibels or more over a day and a night, by Defra's 2022 maps, and when you come off it.
 - The air says what makes it, when it is not good (“the most of it nitrogen dioxide”), and the day's pollen, by the forecast, when there is any: “grass, 34 grains a cubic metre”.
 - Radon: the walk says when you come onto ground where, in places, more than 1% of homes are estimated to have radon at or above the action level, and when you come off it, by kilometre square. It is an estimate for the square, not a measure of any house.
@@ -15,6 +16,7 @@ Add to it with each change worth telling: a line for walkers where a walker woul
 
 ### Under the hood
 
+- `SOURCES=air npm run records`: the London Atmospheric Emissions Inventory 2022 (OGL), its annual means of NO2 and PM2.5 read from the London Datastore's ESRI ASCII grids, or `LAEI_ZIP` (`server/sources/laei.ts`, `readAsc`, `levelGrid`), kept as a `LevelGrid` of 20 m cells (`core/valuegrid.ts`, a store's `levels`; NO2 to the whole microgram, PM2.5 to a tenth), compiled onto each place as `levels` (`Narrator.levelsAt`) and told by the `look` command alone (`render/levels.ts`, `levelsLine`), so it is in no prompt and stored prose keeps its key. The register reaches it to London only. Croydon's box is 1 MB of levels.
 - A register of sources (`server/register.ts`) and `npm run sources:check`, run in CI: each place in `data/places.json` must have every source it is in, or say why it waits. It found Kenilworth had never had the flood zones or the Roman roads; the roads are fetched (4 things near the map), and the flood zones wait, as the Environment Agency's service answered 504. `PLACE=<name> npm run records:place` fetches only what a place is missing.
 - `SOURCES=noise npm run records`: Defra's round 4 road noise (Lden, OGL), asked of the Environment Agency's WCS one kilometre square at a time, as larger pieces time out, and read as GeoTIFF (`server/sources/noise.ts`, `readTiff`). It is kept as a grid of 10 m cells in three bands, 65 to 70, 70 to 75 and 75 decibels or more (`core/valuegrid.ts`, `ValueGrid`, a store's `grids`), and the narrator puts each stop in the band under it as a zone, so a step within the zone says nothing. Kenilworth's box is 42 squares, Croydon's 221.
 - The air now asks Open-Meteo for each pollutant's part of the European index and the six pollens it forecasts, in the same request (`AIR_FIELDS` in `adapters/air.ts`): the pollutant whose part the index is, is named beyond good air; pollen of a grain or more a cubic metre is told, rounded, as forecast (`render/air.ts`).

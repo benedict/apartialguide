@@ -1,5 +1,6 @@
 import { groupBySubject, type Fact } from '../facts';
 import type { LatLon } from '../geo';
+import type { Level } from '../valuegrid';
 import type { Beyond } from '../render/beyond';
 import type { Narrator } from '../narrator';
 import type { Part, Telling, Thing } from '../render/renderer';
@@ -37,6 +38,8 @@ export interface CompiledStop {
 	zones?: { name: string; kind: string; claims?: Record<string, string> }[];
 	/** The named rivers the map runs under the ground here, and how (`beneathAt`): told on coming onto one. */
 	beneath?: { name: string; how: string }[];
+	/** The levels others keep on a grid here, such as the air as modelled for a year: told on looking. */
+	levels?: Level[];
 	/** What a closer look finds, if anything is hidden here. */
 	hidden?: { lines: string[]; things: Thing[] };
 	/** The template's telling, where prose written ahead of time is told instead: for plainly. */
@@ -157,6 +160,7 @@ export function compileWorld(
 		const transit = transitIn(inView);
 		const area = narrator.areaAt(stop.position);
 		const beneath = narrator.beneathAt(stop.position);
+		const levels = narrator.levelsAt(stop.position);
 		const zones = narrator
 			.zonesAt(stop.position)
 			.map(({ name, kind, claims }) => ({ name, kind, ...(claims ? { claims } : {}) }));
@@ -189,7 +193,8 @@ export function compileWorld(
 			...(transit.length ? { transit } : {}),
 			...(area ? { area: { name: area.name, kind: area.kind } } : {}),
 			...(zones.length ? { zones } : {}),
-			...(beneath.length ? { beneath } : {})
+			...(beneath.length ? { beneath } : {}),
+			...(levels.length ? { levels } : {})
 		};
 	}
 	// How many distinct names in the whole map share each word: a word in few is distinctive.

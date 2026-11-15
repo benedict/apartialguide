@@ -32,6 +32,7 @@ export const REGISTER = {
 	companies: { writes: ['company'], reach: 'england' },
 	pubs: { writes: ['pub'], reach: 'england' },
 	noise: { writes: ['noise'], reach: 'england' },
+	air: { writes: ['air'], reach: 'london' },
 	radon: { writes: ['radon'], reach: 'england' },
 	ghostsigns: { writes: ['ghostsign'], reach: 'london' },
 	traffic: { writes: ['traffic'], reach: 'england' },

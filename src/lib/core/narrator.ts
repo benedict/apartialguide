@@ -1,4 +1,4 @@
-import { valueAt, type ValueGrid } from './valuegrid';
+import { levelAt, valueAt, type Level, type LevelGrid, type ValueGrid } from './valuegrid';
 import { isMineEntry } from './entries';
 import { HistoryAdapter } from './adapters/history';
 import { OsmAdapter } from './adapters/osm';
@@ -191,6 +191,7 @@ export class Narrator {
 	readonly beyond: Beyond[];
 	private readonly zones: AreaRecord[];
 	private readonly grids: ValueGrid[];
+	private readonly levels: LevelGrid[];
 	/** The named things, filed by where they lie, so the nearest is sought only among those near. */
 	private readonly namedGrid = new Grid<number>(NEAREST_NAME_REACH);
 
@@ -211,6 +212,7 @@ export class Narrator {
 		this.areas = stores.filter((s) => !s.overlay).flatMap((store) => store.areas ?? []);
 		this.zones = stores.filter((s) => s.overlay).flatMap((store) => store.areas ?? []);
 		this.grids = stores.flatMap((store) => store.grids ?? []);
+		this.levels = stores.flatMap((store) => store.levels ?? []);
 		this.beyond = stores.flatMap((store) =>
 			(store.beyond ?? []).map((b) => ({ ...b, source: store.source }))
 		);
@@ -341,6 +343,15 @@ export class Narrator {
 			return band ? [{ id: g.kind, name: g.name, kind: g.kind, rings: [], claims: { band } }] : [];
 		});
 		return [...drawn, ...gridded];
+	}
+
+	/** The levels others keep on a grid where a point lies, such as the air as modelled for a year. */
+	levelsAt(p: LatLon): Level[] {
+		return this.levels.flatMap((grid) => {
+			const value = levelAt(grid, p);
+			const { kind, year, scale } = grid;
+			return value === undefined ? [] : [{ kind, year, scale, value }];
+		});
 	}
 
 	/** The area another account puts a point in, such as a ward, if any. */

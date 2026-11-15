@@ -1,4 +1,5 @@
 import { zoneLines } from '../render/zones';
+import { levelsLine } from '../render/levels';
 import { COLOURS, isColour, type Colour } from './colours';
 import type { Fact } from '../facts';
 import { skyLine } from '../render/sky';
@@ -495,6 +496,13 @@ export class Adventure {
 		return { title: stop.title, lines: this.inFull(stop) };
 	}
 
+	/** The place in full when asked, with what is told only on looking: the air as modelled here. */
+	private lookAgain(): Reply {
+		const place = this.look();
+		const air = levelsLine(this.world.stops[this.walk.here].levels);
+		return air ? { ...place, lines: [...place.lines, air] } : place;
+	}
+
 	/** The place again from the template alone, where prose was told instead. */
 	private plainly(): Reply {
 		const stop = this.world.stops[this.walk.here];
@@ -585,7 +593,7 @@ export class Adventure {
 			case 'river':
 				return command.off ? this.leaveRiver() : this.takeRiver(command.target ?? '');
 			case 'look':
-				return this.look();
+				return this.lookAgain();
 			case 'plainly':
 				return this.plainly();
 			case 'explore':
