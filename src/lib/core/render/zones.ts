@@ -107,6 +107,8 @@ const HERITAGE = new Set(['conservation area', 'scheduled monument', 'registered
 
 /** Coming into or out of a zone, plainly: a register's area by its name as found, a flood zone as named. */
 function onto(z: Zone, coming: boolean): string {
+	if (z.kind === 'radon')
+		return `You come ${coming ? 'onto' : 'off'} ground where, in places, ${z.name} of homes are estimated to have radon at or above the action level.`;
 	if (z.kind === 'recorded flood')
 		return `You come ${coming ? 'onto' : 'off'} ground ${z.name} covered.`;
 	const kind = z.name.toLowerCase().includes(z.kind) ? '' : `, ${article(z.kind)}`;
