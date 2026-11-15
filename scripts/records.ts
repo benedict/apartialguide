@@ -45,6 +45,7 @@ import { trafficRecords } from '../src/lib/server/sources/traffic';
 import { ghostSignRecords } from '../src/lib/server/sources/ghostsigns';
 import { radonAreas, readDbf } from '../src/lib/server/sources/radon';
 import { levelGrid, readAsc } from '../src/lib/server/sources/laei';
+import type { SourceKey } from '../src/lib/server/register';
 import { noiseGrid, readTiff, type Raster } from '../src/lib/server/sources/noise';
 import { lostPubs, type PastMap } from '../src/lib/server/sources/pubs';
 import { inBox, point } from '../src/lib/server/sources/box';
@@ -78,7 +79,9 @@ async function getJson(url: string, extra: Record<string, string> = {}) {
 
 const name = process.env.SNAPSHOT_NAME ?? 'addiscombe';
 const overpass = process.env.OVERPASS_API ?? 'https://overpass-api.de/api/interpreter';
-const snapshots = 'data/snapshots';
+// SNAPSHOTS_DIR: where to find the snapshot, such as the private data repository's own folder, so a
+// private snapshot need not be copied into this one to be read.
+const snapshots = process.env.SNAPSHOTS_DIR ?? 'data/snapshots';
 const newest = readdirSync(snapshots)
 	.filter((f) => f.startsWith(name) && /\.json(\.gz)?$/.test(f))
 	.sort()
@@ -192,7 +195,9 @@ async function ogcFeatures(label: string, bases: string[]): Promise<ZoneFeature[
 	throw new Error(`no ${label} service answered`);
 }
 
-const SOURCES: Record<string, () => Promise<Taken | Taken[]>> = {
+// Typed over the register's keys (`server/register.ts`), so a source cannot be added without saying
+// what it writes and where it reaches.
+const SOURCES: Record<SourceKey, () => Promise<Taken | Taken[]>> = {
 	/** Food hygiene ratings, from the FSA's ratings API, within about a mile of the middle of the box. */
 	hygiene: async () => {
 		const answer = await getJson(
@@ -973,7 +978,7 @@ const out = process.env.RECORDS_OUT ?? 'data/records';
 mkdirSync(out, { recursive: true });
 let failed = 0;
 for (const key of wanted) {
-	const take = SOURCES[key];
+	const take = SOURCES[key as SourceKey];
 	if (!take) {
 		console.error(`No source called ${key}. There are: ${Object.keys(SOURCES).join(', ')}`);
 		failed++;

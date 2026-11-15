@@ -1,0 +1,23 @@
+{
+	"places": [
+		{
+			"name": "croydon",
+			"snapshot": "croydon",
+			"records": "data/records",
+			"in": ["england", "london"],
+			"waiting": {
+				"epc": "not fetched for the borough yet",
+				"geograph": "not fetched for the borough yet"
+			}
+		},
+		{
+			"name": "kenilworth",
+			"snapshot": "kenilworth",
+			"records": "data/records/kenilworth",
+			"in": ["england"],
+			"waiting": {
+				"floodzones": "the Environment Agency's service answered 504 on 15 November 2026: ask again"
+			}
+		}
+	]
+}
