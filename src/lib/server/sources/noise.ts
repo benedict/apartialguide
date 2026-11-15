@@ -82,10 +82,11 @@ const CELL_M = 10;
 
 /**
  * Road noise over the box as a grid of bands, about ten metres a cell, latitude and longitude, from
- * a sampler that gives the noise map's value in decibels at a point.
+ * a sampler that gives the noise map's value in decibels at a point, or `null` where the service
+ * never answered for it: a grid with such a hole is refused, as the hole would be told as quiet.
  */
 export function noiseGrid(
-	sample: (lat: number, lon: number) => number | undefined,
+	sample: (lat: number, lon: number) => number | undefined | null,
 	bbox: string
 ): ValueGrid {
 	const [w, s, e, n] = bbox.split(',').map(Number);
@@ -94,8 +95,14 @@ export function noiseGrid(
 	const rows: string[] = [];
 	for (let lat = s; lat < n; lat += dLat) {
 		const codes: number[] = [];
-		for (let lon = w; lon < e; lon += dLon)
-			codes.push(codeOf(sample(lat + dLat / 2, lon + dLon / 2)));
+		for (let lon = w; lon < e; lon += dLon) {
+			const db = sample(lat + dLat / 2, lon + dLon / 2);
+			if (db === null)
+				throw new Error(
+					`noise: ground at ${lat.toFixed(5)}, ${lon.toFixed(5)} is without an answer`
+				);
+			codes.push(codeOf(db));
+		}
 		rows.push(encodeRow(codes));
 	}
 	return {

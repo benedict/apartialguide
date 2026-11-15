@@ -66,4 +66,11 @@ describe('noiseGrid', () => {
 		expect(valueAt(grid, [51.3805, -0.1005])).toBe('70 to 75 decibels');
 		expect(valueAt(grid, [51.3805, -0.0995])).toBeUndefined();
 	});
+
+	it('refuses a grid with a hole in it, as ground no one answered for would be told as quiet', () => {
+		// An invented place: the eastern half's square never answered.
+		expect(() =>
+			noiseGrid((lat, lon) => (lon < -0.1 ? 72 : null), '-0.101,51.38,-0.099,51.381')
+		).toThrow(/without an answer/);
+	});
 });

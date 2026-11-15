@@ -7,7 +7,7 @@
  * <prefix>.<area>-<date>.json. Each source's answer is turned into records by a parser in
  * src/lib/server/sources/, tested without the network.
  */
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import type { RecordStore } from '../src/lib/core/adapters/records';
 import { readJson } from '../src/lib/server/json';
 import { REPO } from '../src/lib/server/meta';
@@ -511,8 +511,16 @@ SELECT ?paon ?street ?amount ?date WHERE {
 			km(Math.max(...corners.map((c) => c[1])))
 		];
 		const pieces = new Map<string, Raster | null>();
+		// Each square kept as it comes (NOISE_CACHE), so a run cut short asks again only for the rest.
+		const cache = process.env.NOISE_CACHE ?? 'build/noise';
+		mkdirSync(cache, { recursive: true });
 		for (let x = e0; x <= e1; x++)
 			for (let y = n0; y <= n1; y++) {
+				const kept = `${cache}/${x}-${y}.tif`;
+				if (existsSync(kept)) {
+					pieces.set(`${x},${y}`, readTiff(new Uint8Array(readFileSync(kept))));
+					continue;
+				}
 				const url = `${service}?service=WCS&version=2.0.1&request=GetCoverage&coverageId=${coverage}&subset=E(${x * 1000},${x * 1000 + 1000})&subset=N(${y * 1000},${y * 1000 + 1000})&format=image/tiff`;
 				let piece: Raster | null = null;
 				// One square at a time, with a pause between: the service turns away a quicker pace (429),
@@ -523,7 +531,9 @@ SELECT ?paon ?street ?amount ?date WHERE {
 					try {
 						const res = await fetch(url, { headers, signal: AbortSignal.timeout(60_000) });
 						if (res.ok && (res.headers.get('content-type') ?? '').includes('tiff')) {
-							piece = readTiff(new Uint8Array(await res.arrayBuffer()));
+							const bytes = new Uint8Array(await res.arrayBuffer());
+							piece = readTiff(bytes);
+							writeFileSync(kept, bytes);
 							break;
 						}
 						const asked = Number(res.headers.get('retry-after'));
@@ -540,7 +550,8 @@ SELECT ?paon ?street ?amount ?date WHERE {
 		console.log(`noise: ${pieces.size} squares asked, ${missing} without an answer`);
 		const grid = noiseGrid((lat, lon) => {
 			const [x, y] = toNationalGrid([lon, lat]);
-			return pieces.get(`${km(x)},${km(y)}`)?.at(x, y);
+			const piece = pieces.get(`${km(x)},${km(y)}`);
+			return piece === null ? null : piece?.at(x, y);
 		}, bbox);
 		return { source: 'Defra', prefix: 'noise', records: [], grids: [grid] };
 	},
