@@ -1,5 +1,5 @@
 import { heavensFacts } from '../core/adapters/heavens';
-import { currentAirFacts, type OpenMeteoAir } from '../core/adapters/air';
+import { AIR_FIELDS, currentAirFacts, type OpenMeteoAir } from '../core/adapters/air';
 import { currentWeatherFacts, type OpenMeteoCurrent } from '../core/adapters/weather';
 import type { Fact } from '../core/facts';
 
@@ -58,7 +58,7 @@ export async function fetchAirNow(
 	timeoutMs = 3000
 ): Promise<Fact[]> {
 	if (!at) return [];
-	const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${at.latitude}&longitude=${at.longitude}&current=european_aqi`;
+	const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${at.latitude}&longitude=${at.longitude}&current=${AIR_FIELDS}`;
 	const late = new Promise<never>((_, reject) =>
 		setTimeout(() => reject(new Error('no answer in time')), timeoutMs)
 	);
