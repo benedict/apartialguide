@@ -18,6 +18,8 @@ jobs:
       - run: npm run lint
       - run: npm run check
       - run: npm test
+      # Every place has every source it is in, or says why it waits (data/places.json).
+      - run: npm run sources:check
       # A test is never got out of the way: no fewer here than on the branch this would merge into
       # (or, on main, than before this push), and none skipped, left to do, or run alone.
       - name: No fewer tests than the base
