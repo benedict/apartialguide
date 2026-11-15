@@ -153,6 +153,12 @@ export const SOURCES: Source[] = [
 		terms: `Radon Potential classification © UK Health Security Agency © Crown copyright 2022. Contains British Geological Survey materials © UKRI 2022. ${OGL}`
 	},
 	{
+		name: 'Strategic noise mapping (2022), Defra',
+		href: 'https://www.gov.uk/government/publications/strategic-noise-mapping-2022',
+		gives: 'road noise over a day and a night, by 10 metre square',
+		terms: OGL
+	},
+	{
 		name: 'London Planning Datahub',
 		href: 'https://planningdata.london.gov.uk/',
 		gives: 'planning applications',
