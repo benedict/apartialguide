@@ -40,17 +40,55 @@ export function decodeRow(row: string): number[] {
 	});
 }
 
-const decoded = new WeakMap<ValueGrid, Map<number, number[]>>();
+/**
+ * Levels another source keeps on a grid over the map, such as the air as modelled for a year: each
+ * cell's level times its scale, as a whole number, rows kept as runs. Code 0 is no level.
+ */
+export interface LevelGrid {
+	/** What is measured, in the words Guide says it by: "nitrogen dioxide". */
+	kind: string;
+	/** The year the levels are of. */
+	year: string;
+	/** Codes are the level times this: 10 keeps a tenth. */
+	scale: number;
+	south: number;
+	west: number;
+	dLat: number;
+	dLon: number;
+	rows: string[];
+}
 
-/** The band the grid gives where a point lies, if any. */
-export function valueAt(grid: ValueGrid, [lat, lon]: LatLon): string | undefined {
+/** A level a grid gives at a place, as compiled onto it. */
+export interface Level {
+	kind: string;
+	year: string;
+	scale: number;
+	value: number;
+}
+
+type Cells = Pick<ValueGrid, 'south' | 'west' | 'dLat' | 'dLon' | 'rows'>;
+const decoded = new WeakMap<Cells, Map<number, number[]>>();
+
+/** The code in the cell a point falls in, 0 outside the grid. */
+function codeAt(grid: Cells, [lat, lon]: LatLon): number {
 	const r = Math.floor((lat - grid.south) / grid.dLat);
 	const c = Math.floor((lon - grid.west) / grid.dLon);
-	if (r < 0 || r >= grid.rows.length || c < 0) return undefined;
+	if (r < 0 || r >= grid.rows.length || c < 0) return 0;
 	let rows = decoded.get(grid);
 	if (!rows) decoded.set(grid, (rows = new Map()));
 	let row = rows.get(r);
 	if (!row) rows.set(r, (row = decodeRow(grid.rows[r])));
-	const code = row[c];
+	return row[c] ?? 0;
+}
+
+/** The band the grid gives where a point lies, if any. */
+export function valueAt(grid: ValueGrid, p: LatLon): string | undefined {
+	const code = codeAt(grid, p);
 	return code ? grid.bands[code] : undefined;
+}
+
+/** The level the grid gives where a point lies, if any. */
+export function levelAt(grid: LevelGrid, p: LatLon): number | undefined {
+	const code = codeAt(grid, p);
+	return code ? code / grid.scale : undefined;
 }

@@ -3,6 +3,7 @@ import { destination, type LatLon } from './geo';
 import { fixedClock } from './facts';
 import { Narrator } from './narrator';
 import { SyntheticMap } from './testing/synthetic';
+import { compileWorld } from './adventure/world';
 
 const O = SyntheticMap.ORIGIN;
 const square = (half: number): LatLon[] => {
@@ -78,5 +79,36 @@ describe('zones from a grid of values', () => {
 			['road noise', 'road noise', { band: '70 to 75 decibels' }]
 		]);
 		expect(n.zonesAt([lat, lon + 0.001])).toEqual([]);
+	});
+});
+
+describe('levels from a grid', () => {
+	it('gives each level kept where a point lies, and compiles them onto the place', () => {
+		const map = new SyntheticMap();
+		map.way([map.node(O), map.nodeFrom(O, 90, 40)]);
+		const [lat, lon] = O;
+		const cells = { south: lat - 0.01, west: lon - 0.01, dLat: 0.02, dLon: 0.02, year: '2022' };
+		const n = Narrator.fromOsm(map.toData(), {
+			clock: fixedClock('2026-11-15'),
+			records: [
+				{
+					source: 'Invented air',
+					prefix: 'air',
+					retrieved: '2026-11-15',
+					records: [],
+					levels: [
+						{ ...cells, kind: 'nitrogen dioxide', scale: 1, rows: ['23'] },
+						{ ...cells, kind: 'fine particles', scale: 10, rows: ['84'] }
+					]
+				}
+			]
+		});
+		expect(n.levelsAt(O)).toEqual([
+			{ kind: 'nitrogen dioxide', year: '2022', scale: 1, value: 23 },
+			{ kind: 'fine particles', year: '2022', scale: 10, value: 8.4 }
+		]);
+		expect(n.levelsAt([lat + 1, lon])).toEqual([]);
+		const stops = Object.values(compileWorld(n).stops);
+		expect(stops.every((s) => s.levels?.length === 2)).toBe(true);
 	});
 });
