@@ -1,0 +1,280 @@
+{
+	"source": "Geograph",
+	"prefix": "geograph",
+	"records": [
+		{
+			"id": "6445963",
+			"at": [
+				51.354556681830715,
+				-0.07987375438800753
+			],
+			"observed": "2020-04-15",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2020-04"
+			}
+		},
+		{
+			"id": "6768508",
+			"at": [
+				51.35429369420276,
+				-0.0801722653992707
+			],
+			"observed": "2021-03-03",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-03"
+			}
+		},
+		{
+			"id": "7355728",
+			"at": [
+				51.35407826207178,
+				-0.07817092382087873
+			],
+			"observed": "2022-12-01",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2022-12"
+			}
+		},
+		{
+			"id": "6767492",
+			"at": [
+				51.353358054123305,
+				-0.0780569052196477
+			],
+			"observed": "2021-03-01",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-03"
+			}
+		},
+		{
+			"id": "6768518",
+			"at": [
+				51.353846214164754,
+				-0.08033498541308785
+			],
+			"observed": "2021-03-03",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-03"
+			}
+		},
+		{
+			"id": "2155174",
+			"at": [
+				51.35521902104189,
+				-0.08171409482596774
+			],
+			"observed": "2010-10-10",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2010-10"
+			}
+		},
+		{
+			"id": "7061886",
+			"at": [
+				51.356605578906105,
+				-0.07864017625509089
+			],
+			"observed": "2022-01-03",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2022-01"
+			}
+		},
+		{
+			"id": "6726468",
+			"at": [
+				51.35514396357072,
+				-0.08272192758760287
+			],
+			"observed": "2021-01-09",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-01"
+			}
+		},
+		{
+			"id": "8070032",
+			"at": [
+				51.353262370171514,
+				-0.07763005166227524
+			],
+			"observed": "2025-06-11",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2025-06"
+			}
+		},
+		{
+			"id": "7061878",
+			"at": [
+				51.35451542886946,
+				-0.08274828364617888
+			],
+			"observed": "2022-01-03",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2022-01"
+			}
+		},
+		{
+			"id": "4875142",
+			"at": [
+				51.357046183450564,
+				-0.07804716493713047
+			],
+			"observed": "2016-03-19",
+			"claims": {
+				"name": "TQ3363 : Sanderstead, clubhouse",
+				"kind": "photograph",
+				"taken": "2016-03"
+			}
+		},
+		{
+			"id": "7354129",
+			"at": [
+				51.35314949748587,
+				-0.08165679904645468
+			],
+			"observed": "2022-12-01",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2022-12"
+			}
+		},
+		{
+			"id": "8070034",
+			"at": [
+				51.35289682309822,
+				-0.07721523021860052
+			],
+			"observed": "2025-06-11",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2025-06"
+			}
+		},
+		{
+			"id": "6767475",
+			"at": [
+				51.35255190250555,
+				-0.0782350950939334
+			],
+			"observed": "2021-03-01",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-03"
+			}
+		},
+		{
+			"id": "6766671",
+			"at": [
+				51.3536995369692,
+				-0.08235179685194835
+			],
+			"observed": "2021-03-01",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-03"
+			}
+		},
+		{
+			"id": "6767861",
+			"at": [
+				51.35407138657824,
+				-0.08305424310877875
+			],
+			"observed": "2021-03-01",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-03"
+			}
+		},
+		{
+			"id": "8070028",
+			"at": [
+				51.3527805126658,
+				-0.0812408316871897
+			],
+			"observed": "2025-06-11",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2025-06"
+			}
+		},
+		{
+			"id": "6767445",
+			"at": [
+				51.352388036576144,
+				-0.0791031261535566
+			],
+			"observed": "2021-03-01",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-03"
+			}
+		},
+		{
+			"id": "7354139",
+			"at": [
+				51.35232673009207,
+				-0.08082887503249063
+			],
+			"observed": "2022-12-01",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2022-12"
+			}
+		},
+		{
+			"id": "6733858",
+			"at": [
+				51.355431015426085,
+				-0.08371600936215484
+			],
+			"observed": "2021-01-17",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2021-01"
+			}
+		},
+		{
+			"id": "6695173",
+			"at": [
+				51.35288650985791,
+				-0.08224178895528322
+			],
+			"observed": "2020-11-29",
+			"claims": {
+				"name": "TQ3363 : Croham Hurst",
+				"kind": "photograph",
+				"taken": "2020-11"
+			}
+		}
+	],
+	"retrieved": "2026-11-16"
+}
