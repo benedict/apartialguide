@@ -70,6 +70,21 @@ describe('detectTensions', () => {
 		).flat();
 		expect(detectTensions([...street, ...many], clock)).toContainEqual({ kind: 'dense' });
 	});
+
+	it('does not count what is kept out of prose, so it never makes a stop crowded or less sparse', () => {
+		const seven = Array.from({ length: 7 }, (_, i) =>
+			facts(`node/${i + 10}`, { amenity: 'bench' })
+		).flat();
+		const photo = facts(
+			'geograph/1',
+			{ 'geograph:title': 'Invented Lane' },
+			{ source: 'Geograph', observed: '2010-05' }
+		);
+		expect(detectTensions([...street, ...seven, ...photo], clock)).not.toContainEqual({
+			kind: 'dense'
+		});
+		expect(detectTensions([...street, ...photo], clock)).toContainEqual({ kind: 'sparse' });
+	});
 });
 
 describe('detectTensions with history', () => {

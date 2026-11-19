@@ -8,6 +8,7 @@
  * src/lib/server/sources/, tested without the network.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import type { RecordStore } from '../src/lib/core/adapters/records';
 import { readJson } from '../src/lib/server/json';
 import { REPO } from '../src/lib/server/meta';
@@ -40,7 +41,7 @@ import { companyRecords } from '../src/lib/server/sources/companies';
 import { epcFromSearch, epcRecords } from '../src/lib/server/sources/epc';
 import { britanniaBeyond, BRITANNIA_TABLES } from '../src/lib/server/sources/britannia';
 import { readGpkgLayer, toNationalGrid } from '../src/lib/server/gpkg';
-import { geographRecords } from '../src/lib/server/sources/geograph';
+import { dumpPhotos, geographRecords, myriadsOf } from '../src/lib/server/sources/geograph';
 import { trafficRecords } from '../src/lib/server/sources/traffic';
 import { ghostSignRecords } from '../src/lib/server/sources/ghostsigns';
 import { radonAreas, readDbf } from '../src/lib/server/sources/radon';
@@ -716,26 +717,33 @@ SELECT ?paon ?street ?amount ?date WHERE {
 		);
 		return { source: 'Energy Performance of Buildings Register', prefix: 'epc', records };
 	},
-	/** Photographs of the box from Geograph, page by page around its centre. Needs GEOGRAPH_API_KEY. */
+	/**
+	 * Photographs of the box from Geograph's dumps of its photographs, one to each 100 km square the
+	 * box reaches (`gridimage_base-<myriad>.mysql.gz`, data.geograph.org.uk), as its terms ask of
+	 * anything larger than a page's lookups: from GEOGRAPH_DUMPS, a folder of them downloaded by hand,
+	 * or downloaded here. The latest in each patch of about 100 m, with its photographer.
+	 */
 	geograph: async () => {
-		const key = process.env.GEOGRAPH_API_KEY;
-		if (!key) throw new Error('geograph needs GEOGRAPH_API_KEY');
-		const km = Math.ceil(
-			Math.hypot((n - s) * 111, (e - w) * 111 * Math.cos((centre.lat * Math.PI) / 180)) / 2
-		);
-		const items: unknown[] = [];
-		for (let page = 1; page <= 50; page++) {
-			const answer = await getJson(
-				`https://api.geograph.org.uk/syndicator.php?key=${encodeURIComponent(key)}&format=JSON&q=${centre.lat.toFixed(5)},${centre.lon.toFixed(5)}&distance=${km}&perpage=100&page=${page}`
-			);
-			const got = answer.items ?? [];
-			if (page === 1)
-				console.log(`geograph: first item ${JSON.stringify(got[0] ?? {}).slice(0, 300)}`);
-			items.push(...got);
-			if (got.length < 100) break;
+		const dir = process.env.GEOGRAPH_DUMPS ?? '/tmp/geograph';
+		mkdirSync(dir, { recursive: true });
+		let photos: ReturnType<typeof dumpPhotos> = [];
+		for (const myriad of myriadsOf(bbox)) {
+			const file = `${dir}/gridimage_base-${myriad}.mysql.gz`;
+			if (!existsSync(file)) {
+				const res = await fetch(
+					`https://data.geograph.org.uk/dumps/gridimage_base-by-myriad/gridimage_base-${myriad}.mysql.gz`,
+					{ headers }
+				);
+				if (!res.ok || !res.body)
+					throw new Error(`Geograph's dump of ${myriad} answered ${res.status}`);
+				await pipeline(Readable.fromWeb(res.body as WebStream), createWriteStream(file));
+			}
+			const dumped = dumpPhotos(new Uint8Array(gunzipSync(readFileSync(file))));
+			console.log(`geograph: ${myriad}, ${dumped.length} photographs`);
+			photos = photos.concat(dumped);
 		}
-		const records = geographRecords({ items: items as never }, bbox);
-		console.log(`geograph: ${items.length} photographs, ${records.length} kept`);
+		const records = geographRecords({ items: photos }, bbox);
+		console.log(`geograph: ${records.length} kept, the latest in each patch`);
 		return { source: 'Geograph', prefix: 'geograph', records };
 	},
 	/**

@@ -4,6 +4,17 @@ What has changed in A Partial Guide, newest first. Each day has lines **for walk
 
 Add to it with each change worth telling: a line for walkers where a walker would notice, a line under the hood where only the code changed. The front page shows the latest three days that have lines for walkers.
 
+## 2026-11-19
+
+### For walkers
+
+- Photographs: across Croydon, about 7,000 places now say what someone photographed there, when, and who took it: “Stockbury Road, near Addiscombe”, a photograph. Taken in August 2016 by Malc McDonald.
+
+### Under the hood
+
+- Geograph's photographs come from its downloads (`gridimage_base-<myriad>.mysql.gz`), not its live search, which ignored paging (all 50 pages were the same 100) and whose terms ask that larger use come from the downloads; no key is needed. The dump is Windows-1252 (Node's decoder reads it as Latin-1, so it is read by table), and a date of a month or a year alone is kept as such. Croydon has 7,169 places with a photograph (it had none), Kenilworth 828 (it had 19). Each tells its photographer, as CC BY-SA asks.
+- What is kept out of prose no longer makes a place crowded, or less empty, in the prompt (`tensions.ts`), as it already cost no attention (`slippage.ts`): without it the photographs moved 88 places' prompts and lost their prose. Stored prose found for Croydon stays 2,554.
+
 ## 2026-11-15
 
 ### For walkers
