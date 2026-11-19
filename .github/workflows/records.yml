@@ -59,7 +59,6 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=6144
           # Keyed sources: unset, they say so and the rest still fetch.
           EPC_API_KEY: ${{ secrets.EPC_API_KEY }}
-          GEOGRAPH_API_KEY: ${{ secrets.GEOGRAPH_API_KEY }}
           # Digital Britannia's GeoPackage, downloaded by hand and kept in the private data repository.
           BRITANNIA_GPKG: .private-data/britannia/digital-britannia_v1.gpkg
       - name: Commit records

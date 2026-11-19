@@ -221,9 +221,10 @@ export const SOURCES: Source[] = [
 	},
 	{
 		name: 'Geograph',
-		href: 'https://www.geograph.org.uk/',
-		gives: 'the titles of photographs taken here, and when',
-		terms: 'Photograph titles © their photographers, licensed under CC BY-SA 2.0'
+		href: 'https://data.geograph.org.uk/dumps/',
+		gives: 'the titles of photographs taken here, when, and by whom, from its downloads',
+		terms:
+			'Photograph titles © their photographers, each named where the walk tells the title, and the data © the Geograph Project, licensed under CC BY-SA 2.0'
 	},
 	{
 		name: 'Environment Agency',

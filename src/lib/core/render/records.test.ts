@@ -163,7 +163,13 @@ describe('recordSentences, keyed accounts', () => {
 		expect(recordSentences({ 'epc:built': '1900-1929' }, 'room')).toEqual([]);
 	});
 
-	it('says when a photograph was taken', () => {
+	it('says when a photograph was taken, and by whom', () => {
+		expect(
+			recordSentences({ 'geograph:taken': '2009-05', 'geograph:by': 'Ann Example' }, 'room')
+		).toEqual(['Taken in May 2009 by Ann Example.']);
+		expect(
+			recordSentences({ 'geograph:taken': '2007', 'geograph:by': 'Ann Example' }, 'room')
+		).toEqual(['Taken in 2007 by Ann Example.']);
 		expect(recordSentences({ 'geograph:taken': '2009-05' }, 'room')).toEqual([
 			'Taken in May 2009.'
 		]);

@@ -1,4 +1,5 @@
 import { groupBySubject, type Clock, type Fact } from './facts';
+import { keptOutOfProse } from './keepers';
 
 /** A condition in the data that the narration must answer to. */
 export type Tension =
@@ -42,6 +43,9 @@ export function detectTensions(
 			}
 		}
 		if (isStreet(group)) continue;
+		// What the prompt never sees (photographs, ghost signs, lost pubs) neither crowds a stop nor
+		// fills an empty one, so the mood the prompt is given, and the prose kept for it, is as it was.
+		if (group.every((f) => keptOutOfProse(f.source))) continue;
 		features++;
 		const [past, present] = partition(group, isHistory);
 		if (present.length === 0 && past.length > 0) {

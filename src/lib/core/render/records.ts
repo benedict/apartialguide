@@ -77,7 +77,14 @@ const SAYINGS: [boolean, (t: Tags, plain: boolean) => string | undefined][] = [
 	],
 	[
 		true,
-		(t) => (t['geograph:taken'] ? `Taken in ${monthYear(`${t['geograph:taken']}-01`)}.` : undefined)
+		(t) => {
+			// A photograph's date, to the month or the year, and its photographer, as the licence asks.
+			const taken = t['geograph:taken'];
+			if (!taken) return undefined;
+			const when = /^\d{4}$/.test(taken) ? taken : monthYear(`${taken}-01`);
+			const by = t['geograph:by'] ? ` by ${t['geograph:by']}` : '';
+			return `Taken in ${when}${by}.`;
+		}
 	],
 	[
 		true,

@@ -37,7 +37,7 @@ export const REGISTER = {
 	ghostsigns: { writes: ['ghostsign'], reach: 'london' },
 	traffic: { writes: ['traffic'], reach: 'england' },
 	epc: { writes: ['epc'], reach: 'england', needs: 'EPC_API_KEY' },
-	geograph: { writes: ['geograph'], reach: 'england', needs: 'GEOGRAPH_API_KEY' },
+	geograph: { writes: ['geograph'], reach: 'england' },
 	britannia: {
 		writes: ['roman'],
 		reach: 'england',
