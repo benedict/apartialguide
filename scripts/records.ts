@@ -45,6 +45,7 @@ import { dumpPhotos, geographRecords, myriadsOf } from '../src/lib/server/source
 import { trafficRecords } from '../src/lib/server/sources/traffic';
 import { ghostSignRecords } from '../src/lib/server/sources/ghostsigns';
 import { radonAreas, readDbf } from '../src/lib/server/sources/radon';
+import { electionNotes } from '../src/lib/server/sources/elections';
 import { levelGrid, readAsc } from '../src/lib/server/sources/laei';
 import type { SourceKey } from '../src/lib/server/register';
 import { noiseGrid, readTiff, type Raster } from '../src/lib/server/sources/noise';
@@ -608,6 +609,31 @@ SELECT ?paon ?street ?amount ?date WHERE {
 			records: [],
 			levels
 		};
+	},
+	/**
+	 * Each ward's latest local election, from Democracy Club's export of candidates and results
+	 * (CC BY 4.0): ELECTION_COUNCILS names the councils by their slug in its election ids
+	 * (`croydon`, `warwick`). Only those elected are kept, with the turnout.
+	 */
+	elections: async () => {
+		const councils = (process.env.ELECTION_COUNCILS ?? '').split(/[\s,]+/).filter(Boolean);
+		if (!councils.length) throw new Error("elections needs ELECTION_COUNCILS, the councils' slugs");
+		const fields = ['elected', 'gss', 'turnout_percentage']
+			.map((f) => `&extra_fields=${f}`)
+			.join('');
+		const notes = [];
+		for (const council of councils) {
+			const id = encodeURIComponent(`local\\.${council}\\..*`);
+			const res = await fetch(
+				`https://candidates.democracyclub.org.uk/data/export_csv/?election_id=${id}${fields}&format=csv`,
+				{ headers }
+			);
+			if (!res.ok) throw new Error(`Democracy Club answered ${res.status} for ${council}`);
+			const found = electionNotes(await res.text());
+			console.log(`elections: ${council}, ${found.length} wards`);
+			notes.push(...found);
+		}
+		return { source: 'Democracy Club', prefix: 'elections', records: [], notes };
 	},
 	/**
 	 * Radon potential by kilometre square, from the BGS/UKHSA Indicative Atlas of Radon (v3, OGL):

@@ -112,3 +112,33 @@ describe('levels from a grid', () => {
 		expect(stops.every((s) => s.levels?.length === 2)).toBe(true);
 	});
 });
+
+describe('what another account says of an area', () => {
+	it('joins a note to the area it names, by its id', () => {
+		const map = new SyntheticMap();
+		map.way([map.node(O), map.nodeFrom(O, 90, 40)]);
+		const n = Narrator.fromOsm(map.toData(), {
+			clock: fixedClock('2026-11-24'),
+			records: [
+				{
+					source: 'Invented wards',
+					prefix: 'ward',
+					retrieved: '2026-11-24',
+					records: [],
+					areas: [{ id: 'E05000001', name: 'Inventa East', kind: 'ward', rings: [square(500)] }]
+				},
+				{
+					source: 'Invented elections',
+					prefix: 'elections',
+					retrieved: '2026-11-24',
+					records: [],
+					notes: [{ area: 'E05000001', claims: { date: '2026-05-07', turnout: '48.11' } }]
+				}
+			]
+		});
+		expect(n.areaAt(O)?.claims).toEqual({
+			'elections:date': '2026-05-07',
+			'elections:turnout': '48.11'
+		});
+	});
+});

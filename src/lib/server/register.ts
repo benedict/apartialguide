@@ -27,6 +27,11 @@ export const REGISTER = {
 	prices: { writes: ['price'], reach: 'england' },
 	crime: { writes: ['crime'], reach: 'england' },
 	wards: { writes: ['ward'], reach: 'england' },
+	elections: {
+		writes: ['elections'],
+		reach: 'england',
+		needs: "ELECTION_COUNCILS, the councils by their slug in Democracy Club's election ids"
+	},
 	wildlife: { writes: ['wildlife'], reach: 'england' },
 	postcodes: { writes: ['postcode'], reach: 'england' },
 	companies: { writes: ['company'], reach: 'england' },

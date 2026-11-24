@@ -23,6 +23,7 @@ const DOINGS: Record<string, string> = {
 	'UK Health Security Agency and British Geological Survey':
 		'those who map the radon in the ground',
 	Defra: 'those who map the noise of the roads',
+	'Democracy Club': 'those who gather the results of elections',
 	'London Atmospheric Emissions Inventory': 'those who model London’s air',
 	'Energy Performance of Buildings Register': 'those who rate houses for the heat they lose',
 	Geograph: 'those who photograph every square of the country',

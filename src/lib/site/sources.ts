@@ -153,6 +153,13 @@ export const SOURCES: Source[] = [
 		terms: `Radon Potential classification © UK Health Security Agency © Crown copyright 2022. Contains British Geological Survey materials © UKRI 2022. ${OGL}`
 	},
 	{
+		name: 'Democracy Club',
+		href: 'https://democracyclub.org.uk',
+		gives: 'each ward’s latest local election: when, its turnout, and those it elected',
+		terms:
+			'Candidates and results © Democracy Club, licensed under CC BY 4.0. Only those elected are named.'
+	},
+	{
 		name: 'Strategic noise mapping (2022), Defra',
 		href: 'https://www.gov.uk/government/publications/strategic-noise-mapping-2022',
 		gives: 'road noise over a day and a night, by 10 metre square',

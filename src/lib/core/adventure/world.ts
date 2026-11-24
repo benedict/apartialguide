@@ -33,7 +33,7 @@ export interface CompiledStop {
 	/** Where the map puts the stop, as latitude and longitude. */
 	at?: [number, number];
 	/** The area another account puts this stop in, such as a ward. */
-	area?: { name: string; kind: string };
+	area?: { name: string; kind: string; claims?: Record<string, string> };
 	/** Other areas another account draws over this stop, such as flood zones: any number at once. */
 	zones?: { name: string; kind: string; claims?: Record<string, string> }[];
 	/** The named rivers the map runs under the ground here, and how (`beneathAt`): told on coming onto one. */
@@ -191,7 +191,15 @@ export function compileWorld(
 			...(room.plain ? { plain: room.plain } : {}),
 			...(fragments.length ? { fragments } : {}),
 			...(transit.length ? { transit } : {}),
-			...(area ? { area: { name: area.name, kind: area.kind } } : {}),
+			...(area
+				? {
+						area: {
+							name: area.name,
+							kind: area.kind,
+							...(area.claims ? { claims: area.claims } : {})
+						}
+					}
+				: {}),
 			...(zones.length ? { zones } : {}),
 			...(beneath.length ? { beneath } : {}),
 			...(levels.length ? { levels } : {})

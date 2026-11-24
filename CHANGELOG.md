@@ -4,6 +4,16 @@ What has changed in A Partial Guide, newest first. Each day has lines **for walk
 
 Add to it with each change worth telling: a line for walkers where a walker would notice, a line under the hood where only the code changed. The front page shows the latest three days that have lines for walkers.
 
+## 2026-11-24
+
+### For walkers
+
+- Elections: coming into a ward, the walk says when its councillors were last elected, how many of those who could vote did, and whom they elected, by name and party: “In May 2026, 48% of those who could vote here did, and elected …”.
+
+### Under the hood
+
+- `SOURCES=elections ELECTION_COUNCILS=croydon npm run records`: each ward's latest local election from Democracy Club's CSV export (CC BY 4.0, credited on About), joined to the ward by its code as a store's `notes` (`AreaNote`). Only those elected are kept; every other candidate is taken out where it is fetched. Croydon's 28 wards all have May 2026's; Kenilworth's from Warwick District's. The prompt never sees the ward, so stored prose is unchanged.
+
 ## 2026-11-19
 
 ### For walkers
