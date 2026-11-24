@@ -209,7 +209,20 @@ export class Narrator {
 			if (thing.geometry.length) this.namedGrid.add(i, boxOf(thing.geometry));
 		});
 		const stores = options.records ?? [];
-		this.areas = stores.filter((s) => !s.overlay).flatMap((store) => store.areas ?? []);
+		// What other stores say of an area joins its claims, prefixed by the store saying it.
+		const notes = new Map<string, Record<string, string>>();
+		for (const store of stores)
+			for (const note of store.notes ?? [])
+				notes.set(note.area, {
+					...notes.get(note.area),
+					...Object.fromEntries(
+						Object.entries(note.claims).map(([k, v]) => [`${store.prefix}:${k}`, v])
+					)
+				});
+		this.areas = stores
+			.filter((s) => !s.overlay)
+			.flatMap((store) => store.areas ?? [])
+			.map((a) => (notes.has(a.id) ? { ...a, claims: { ...a.claims, ...notes.get(a.id) } } : a));
 		this.zones = stores.filter((s) => s.overlay).flatMap((store) => store.areas ?? []);
 		this.grids = stores.flatMap((store) => store.grids ?? []);
 		this.levels = stores.flatMap((store) => store.levels ?? []);

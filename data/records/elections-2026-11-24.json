@@ -1,0 +1,246 @@
+{
+	"source": "Democracy Club",
+	"prefix": "elections",
+	"records": [],
+	"notes": [
+		{
+			"area": "E05000168",
+			"claims": {
+				"date": "2016-05-05",
+				"elected": "Callton Young (Labour Party)"
+			}
+		},
+		{
+			"area": "E05000164",
+			"claims": {
+				"date": "2017-09-07",
+				"elected": "Patsy Cummings (Labour Party)"
+			}
+		},
+		{
+			"area": "E05011462",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "48.11",
+				"elected": "Jeet Bains (Conservative and Unionist Party); Maddie Henson (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011463",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "39.03",
+				"elected": "Nick Beall (Labour and Co-operative Party); Sean Eamonn Fitzsimons (Labour and Co-operative Party); Patricia Hay-Justice (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011464",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "32.80",
+				"elected": "Humayun Kabir (Labour and Co-operative Party); Mohana Manoharan (Labour and Co-operative Party); Ellie Sandover (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011465",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "32.11",
+				"elected": "Aba Amoah (Labour and Co-operative Party); Tom Bowell (Labour and Co-operative Party); Manju Shahul-Hameed (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011466",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "48.80",
+				"elected": "Ian James Parker (Conservative and Unionist Party); Luke Daniel Shortland (Conservative and Unionist Party); Nikhil Sherine Thampi (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011467",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "46.87",
+				"elected": "Mark Adderley (Green Party); Claire Bonham (Liberal Democrats); Natalie Louise Vesty (Green Party)"
+			}
+		},
+		{
+			"area": "E05011468",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "31.06",
+				"elected": "Paul Wyn Ednyfed Ainscough (Green Party); Ria Patel (Green Party); Esther Sutton (Green Party)"
+			}
+		},
+		{
+			"area": "E05011469",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "47.20",
+				"elected": "Gayle Gander (Conservative and Unionist Party); Ola Kolade (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011470",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "32.52",
+				"elected": "Kola Agboola (Labour and Co-operative Party); Afuah Ahorgah-Dorfia (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011471",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "36.33",
+				"elected": "Scott Holman (Reform UK); Adam Kellett (Reform UK)"
+			}
+		},
+		{
+			"area": "E05011473",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "38.38",
+				"elected": "Julie Setchfield (Labour and Co-operative Party); Appu Dhamodaran Srinivasan (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011472",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "36.67",
+				"elected": "Leila Ben-Hassel (Labour Party); John Patrick Wentworth (Labour Party)"
+			}
+		},
+		{
+			"area": "E05011474",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "52.83",
+				"elected": "Margaret Bird (Conservative and Unionist Party); Gill Hickson (Liberal Democrats)"
+			}
+		},
+		{
+			"area": "E05011475",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "47.01",
+				"elected": "Andrew Robert Price (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011477",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "47.29",
+				"elected": "Endri Llabuti (Conservative and Unionist Party); Alasdair Iain Stewart (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011476",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "42.75",
+				"elected": "Simon Brew (Conservative and Unionist Party); Samir Dwesar (Conservative and Unionist Party); James Douglas Hillam (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011478",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "54.41",
+				"elected": "Lynne Carol Hale (Conservative and Unionist Party); Yvette Rose Hopley (Conservative and Unionist Party); Helen Dawn Redfern (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011479",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "30.13",
+				"elected": "Mohammed Amirul Islam (Labour and Co-operative Party); Catherine Maud Wilson (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011480",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "48.83",
+				"elected": "Joseph Lee (Conservative and Unionist Party); Robert Charles Ward (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011481",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "48.97",
+				"elected": "Jack David Barwell (Conservative and Unionist Party); Andy Stranack (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011482",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "44.05",
+				"elected": "Sue Bennett (Conservative and Unionist Party); Richard Rishi Chatterjee (Conservative and Unionist Party); Mark Johnson (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011483",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "49.39",
+				"elected": "Jason James Cummings (Conservative and Unionist Party); Scott Roche (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011484",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "45.29",
+				"elected": "Danielle Denton (Conservative and Unionist Party); Matthew Dormer (Conservative and Unionist Party); Michael Anthony Neal (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05011485",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "36.74",
+				"elected": "Melanie Dorothea Felten (Labour and Co-operative Party); Tracey Jo Hague (Green Party); Martyn Post (Green Party)"
+			}
+		},
+		{
+			"area": "E05011486",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "35.73",
+				"elected": "Jose Piedade Fernandes (Labour and Co-operative Party); Vicky Ekua Newton (Labour and Co-operative Party); Ben Taylor (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011487",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "37.55",
+				"elected": "Sam James Gary Attwater (Labour and Co-operative Party); Rowenna Frances Davis (Labour and Co-operative Party); Ellily Ponnuthurai (Labour and Co-operative Party)"
+			}
+		},
+		{
+			"area": "E05011488",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "33.70",
+				"elected": "Janet Campbell (Labour Party); Rym Daoud (Labour Party); Stuart Thomas King (Labour Party)"
+			}
+		},
+		{
+			"area": "E05011489",
+			"claims": {
+				"date": "2026-05-07",
+				"turnout": "38.52",
+				"elected": "Laura Bradnam (Green Party); Amy Foster (Labour Party); Brigitte Graham (Labour Party)"
+			}
+		}
+	],
+	"retrieved": "2026-11-24"
+}

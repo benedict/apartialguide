@@ -1,5 +1,6 @@
 import { zoneLines } from '../render/zones';
 import { levelsLine } from '../render/levels';
+import { electionLine } from '../render/elections';
 import { COLOURS, isColour, type Colour } from './colours';
 import type { Fact } from '../facts';
 import { skyLine } from '../render/sky';
@@ -1446,8 +1447,14 @@ export class Adventure {
 		// Said plainly, as a record: a ward is no thing the map shows, so its name carries its kind.
 		const called = (a: { name: string; kind: string }) =>
 			a.name.toLowerCase().endsWith(a.kind.toLowerCase()) ? a.name : `${a.name} ${a.kind}`;
-		if (!from) return `You are in ${called(to!)}.`;
-		return to ? `You leave ${called(from)} for ${called(to)}.` : `You leave ${called(from)}.`;
+		// Coming into a ward, its last election as recorded, as a ward is where a vote is counted.
+		const voted = electionLine(to?.claims);
+		const said = !from
+			? `You are in ${called(to!)}.`
+			: to
+				? `You leave ${called(from)} for ${called(to)}.`
+				: `You leave ${called(from)}.`;
+		return voted ? `${said} ${voted}` : said;
 	}
 
 	/** Where the map puts this place, for what is asked of it: never where the reader is. */

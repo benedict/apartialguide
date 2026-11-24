@@ -34,6 +34,12 @@ export interface SourceRecord {
 }
 
 /** A dated copy of one source's records about the place, taken by hand into data/records/. */
+/** What a store says of an area another store draws (`area`, its id), claims unprefixed. */
+export interface AreaNote {
+	area: string;
+	claims: Record<string, string>;
+}
+
 export interface RecordStore {
 	/** The source, as it should be credited. */
 	source: string;
@@ -45,6 +51,8 @@ export interface RecordStore {
 	standalone?: boolean;
 	/** Areas the source draws, such as wards, rather than things. */
 	areas?: AreaRecord[];
+	/** What it says of areas another store draws, by their id: a ward's last election. */
+	notes?: AreaNote[];
 	/** Whether its areas lie over the map as zones (flood zones), rather than dividing it (wards). */
 	overlay?: boolean;
 	/** Values it keeps on a grid over the map, such as road noise: told as zones, by their band. */

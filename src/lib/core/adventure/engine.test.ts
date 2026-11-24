@@ -836,6 +836,33 @@ describe('Departures', () => {
 			game.respond('east');
 			expect(game.respond('north').lines[0]).toBe('You leave Inventa West ward.');
 		});
+
+		it('tells the ward’s last election on coming into it, and not on a step within it', () => {
+			const voted: AdventureWorld = {
+				...wardWorld,
+				stops: {
+					...wardWorld.stops,
+					c: {
+						...wardWorld.stops.c,
+						area: {
+							...ward('Inventa East'),
+							claims: {
+								'elections:date': '2026-05-07',
+								'elections:turnout': '48.11',
+								'elections:elected': 'Ann Example (Invented Party); Bo Example (Other Party)'
+							}
+						}
+					}
+				}
+			};
+			const game = new Adventure(voted);
+			game.begin();
+			game.respond('take the tour');
+			game.respond('east');
+			expect(game.respond('east').lines[0]).toBe(
+				'You leave Inventa West ward for Inventa East ward. In May 2026, 48% of those who could vote here did, and elected Ann Example (Invented Party) and Bo Example (Other Party).'
+			);
+		});
 	});
 
 	describe('gps', () => {

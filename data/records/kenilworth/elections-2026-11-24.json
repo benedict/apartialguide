@@ -1,0 +1,151 @@
+{
+	"source": "Democracy Club",
+	"prefix": "elections",
+	"records": [],
+	"notes": [
+		{
+			"area": "E05009796",
+			"claims": {
+				"date": "2017-10-05",
+				"elected": "Trevor Alexander Churchill Wright (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05012615",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "33.00",
+				"elected": "Matt Collins (Labour Party); Andrew Day (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05012616",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "55.00",
+				"elected": "Jan Matecki (Conservative and Unionist Party); Peter Brian Phillips (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05012617",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "52.00",
+				"elected": "Josh Payne (Liberal Democrats); Pamela Jean Redford (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05012618",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "35.00",
+				"elected": "Kyn Aizlewood (Green Party); David John Armstrong (Green Party); Richard Hales (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05012619",
+			"claims": {
+				"date": "2025-09-18",
+				"turnout": "31.48",
+				"elected": "Alison Jane Firth (Green Party)"
+			}
+		},
+		{
+			"area": "E05012620",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "37.00",
+				"elected": "Richard Dickson (Liberal Democrats); Kate Dickson (Liberal Democrats); Andrew William Milton (Liberal Democrats)"
+			}
+		},
+		{
+			"area": "E05012621",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "25.00",
+				"elected": "Jonathan Chilvers (Green Party); Ian Davison (Green Party); Naveen Tangri (Green Party)"
+			}
+		},
+		{
+			"area": "E05012622",
+			"claims": {
+				"date": "2025-09-18",
+				"turnout": "25.16",
+				"elected": "Chris Knight (Labour Party)"
+			}
+		},
+		{
+			"area": "E05012623",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "35.00",
+				"elected": "Alan Boad (Liberal Democrats); Phil Kohler (Liberal Democrats); Daniel Mark Russell (Liberal Democrats)"
+			}
+		},
+		{
+			"area": "E05012624",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "35.00",
+				"elected": "Bill Gifford (Liberal Democrats); Carolyn Patricia Gifford (Liberal Democrats); Sidney Syson (Liberal Democrats)"
+			}
+		},
+		{
+			"area": "E05012625",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "35.00",
+				"elected": "Ella Billiald (Green Party); Martin Luckhurst (Green Party); Will Roberts (Green Party)"
+			}
+		},
+		{
+			"area": "E05012626",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "38.00",
+				"elected": "Becky Davidson (Conservative and Unionist Party)"
+			}
+		},
+		{
+			"area": "E05012627",
+			"claims": {
+				"date": "2025-02-13",
+				"turnout": "27.00",
+				"elected": "Sam Jones (Green Party)"
+			}
+		},
+		{
+			"area": "E05012628",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "52.00",
+				"elected": "Daniel Philip Browne (Labour Party); Gabriel Rosu (Labour Party)"
+			}
+		},
+		{
+			"area": "E05012629",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "44.00",
+				"elected": "Kathleen Gorman (Green Party); Dominic Harrison (Green Party); Hema YellaPragada (Green Party)"
+			}
+		},
+		{
+			"area": "E05012630",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "35.00",
+				"elected": "Katya Diane Dray (Labour Party); Jim Sinnott (Labour Party)"
+			}
+		},
+		{
+			"area": "E05012631",
+			"claims": {
+				"date": "2023-05-04",
+				"turnout": "37.00",
+				"elected": "Adrian Leigh Barton (Whitnash Residents Association); Judy Falp (Whitnash Residents Association); Robert Leslie Margrave (Whitnash Residents Association)"
+			}
+		}
+	],
+	"retrieved": "2026-11-24"
+}
